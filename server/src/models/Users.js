@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   //here we can create the documents that our user should have
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
 });
 
 //export the mongoose model for the user schema

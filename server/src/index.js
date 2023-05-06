@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 //routers are imported here
 import { UserRouter } from "./routes/users.js";
+import { RecipeRouter } from "./routes/recipes.js";
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(cors()); // for  the api requessts
 
 //routes
 app.use("/auth", UserRouter);
-
+app.use("/recipes", RecipeRouter);
 //data base connection
 mongoose.connect(
   "mongodb+srv://saminchandeepa:test1234@recipies.5l04nhf.mongodb.net/recipies?retryWrites=true&w=majority"
