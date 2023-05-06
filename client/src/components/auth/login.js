@@ -13,6 +13,7 @@ function Login() {
   //navigate
   const navigate = useNavigate();
 
+  //LOGIN METHODE
   const onSubmit = async (event) => {
     event.preventDefault();
 
@@ -32,7 +33,7 @@ function Login() {
       //user name
       const userName = response.data.username;
       console.log(userName);
-      navigate("/", da);
+      navigate("/");
 
       //
     } catch (err) {
