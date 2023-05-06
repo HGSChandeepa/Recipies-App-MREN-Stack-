@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 
-function FormFeild({ username, setUsername, password, setPassword, formName }) {
+function FormFeild({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  formName,
+  onSubmit,
+}) {
   return (
     <div>
-      <form className="flex items-center justify-center gap-4 flex-col">
+      <form
+        onSubmit={onSubmit}
+        className="flex items-center justify-center gap-4 flex-col"
+      >
         <h2 className=" m-2 text-lg">{formName}</h2>
         {/* username */}
         <div className=" flex items-center justify-center gap-4">
@@ -21,7 +31,7 @@ function FormFeild({ username, setUsername, password, setPassword, formName }) {
           <label htmlFor="password">Password</label>
           <input
             className="bg-gray-50 border border-gray-300 rounded-md p-1"
-            type="text"
+            type="password"
             name={password}
             id="password"
             onChange={(event) => setPassword(event.target.value)}

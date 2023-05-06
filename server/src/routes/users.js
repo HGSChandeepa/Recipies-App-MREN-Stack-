@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
   //if the password is correct
   //first we have to create a json web tocken
   const token = jwt.sign({ id: user._id }, "secret"); //TODO:change this to .env
-  res.json({ token, userId: user._id });
+  return res.json({ token, userId: user._id, username: username });
 });
 
 export { router as UserRouter };
