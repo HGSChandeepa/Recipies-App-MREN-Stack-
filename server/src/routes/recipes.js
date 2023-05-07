@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   //take the data from the req
   const recipe = new RecipeModel(req.body);
+  console.log(req.body);
   try {
     const response = await recipe.save();
     return res.json(response);
@@ -37,6 +38,7 @@ router.put("/", async (req, res) => {
     const user = await UserModel.findById(req.body.userId);
 
     user.savedRecipes.push(recipe);
+    //save the new recipe id in the user collection
     await user.save();
 
     return res.json({ savedRecipes: user.savedRecipes });
@@ -57,7 +59,7 @@ router.get("/saved-recipes", async (req, res) => {
     //list of recipe objects
     return res.json(savedRecipes);
   } catch (err) {
-    return res.json(err);
+    res.json(err);
   }
 });
 
@@ -68,7 +70,7 @@ router.get("saved-recipes/ids", async (req, res) => {
 
     return res.json({ savedRecipes: user?.savedRecipes }); //user can be null
   } catch (err) {
-    return res.json(err);
+    res.json(err);
   }
 });
 

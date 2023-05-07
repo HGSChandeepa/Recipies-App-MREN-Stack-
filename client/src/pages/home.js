@@ -1,7 +1,11 @@
 import React from "react";
+import axios from "axios";
 
 function Home() {
-  return <div>Home</div>;
+  //get al the recipes and map those all recipies
+  const addRecipies = () => {};
+
+  return <div></div>;
 }
 
 export default Home;
