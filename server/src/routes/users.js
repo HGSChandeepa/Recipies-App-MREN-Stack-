@@ -41,13 +41,17 @@ router.post("/login", async (req, res) => {
   //now we can login is the user is in the database only if not we have to register
   //so if we not find the user
   if (!user) {
-    return res.json({ message: "user not Exists try to register!" });
+    return res
+      .status(401)
+      .json({ message: "user not Exists try to register!" });
   }
   //if the user exists we have to check the password is also the same
   const isPasswordValid = await bcrypt.compare(password, user.password);
   //if the password is not valid
   if (!isPasswordValid) {
-    return res.json({ message: "username or password is not correct!" });
+    return res
+      .status(401)
+      .json({ message: "username or password is not correct!" });
   }
   //if the password is correct
   //first we have to create a json web tocken

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errMessgae, setErrorMessage] = useState("");
 
   //ccookies
   const [cookies, setCookie] = useCookies(["access-token"]);
@@ -25,7 +26,7 @@ function Login() {
         username,
         password,
       });
-
+      console.log(response.data);
       //create the access token
       setCookie("access-token", response.data.token);
       //store the userid in local storage
@@ -37,12 +38,14 @@ function Login() {
 
       //
     } catch (err) {
+      setErrorMessage(err.response.data.message);
       console.error(err);
     }
   };
 
   return (
     <div>
+      {errMessgae && <div className=" text-red-600">{errMessgae}</div>}
       <FormFeild
         username={username}
         setUsername={setUsername}
