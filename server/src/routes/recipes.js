@@ -2,12 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import { RecipeModel } from "../models/Recipies.js";
 import { UserModel } from "../models/Users.js";
+import { verifyToken } from "./users.js";
 
 const router = express.Router();
 
 //get all the recipes
 
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
     const response = await RecipeModel.find({});
     return res.json(response);
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
 
 //create a new recipe
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   //take the data from the req
   const recipe = new RecipeModel(req.body);
   console.log(req.body);
@@ -31,7 +32,7 @@ router.post("/", async (req, res) => {
 });
 
 //save route >>>here we are using a post methode because we have to update the users database when the user add a new recipie to the list by saveing
-router.put("/", async (req, res) => {
+router.put("/", verifyToken, async (req, res) => {
   try {
     //the saving recipe
     const recipe = await RecipeModel.findById(req.body.recipeId);

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useGetUserId } from "../hooks/useGetUserId";
+import { useCookies } from "react-cookie";
 
 function Home() {
   const [allRecipesList, setAllRecipesList] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [disabledbutton, setDisabledbutton] = useState(false);
+  const [cookies, _] = useCookies(["access-token"]);
 
   const userId = useGetUserId();
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/recipes/");
+        const response = await axios.get("http://localhost:3001/recipes/", {
+          headers: { Authorization: cookies["access-token"] },
+        });
         setAllRecipesList(response.data);
       } catch (err) {
         console.log(err);
@@ -34,10 +38,14 @@ function Home() {
 
   const saveRecipe = async (recipeId) => {
     try {
-      const response = await axios.put("http://localhost:3001/recipes", {
-        recipeId,
-        userId,
-      });
+      const response = await axios.put(
+        "http://localhost:3001/recipes",
+        {
+          recipeId,
+          userId,
+        },
+        { headers: { Authorization: cookies["access-token"] } }
+      );
 
       setDisabledbutton(true);
       setSavedRecipes([...savedRecipes, recipeId]);
@@ -88,7 +96,7 @@ function Home() {
                     })}
                   </ul>
                 </div>
-                <img className="w-90" src={recipe.imageUrl} alt={recipe.name} />
+                <img className="w-60" src={recipe.imageUrl} alt={recipe.name} />
                 <p className="p-2">{recipe.cookingTime} (minutes)</p>
               </li>
             );

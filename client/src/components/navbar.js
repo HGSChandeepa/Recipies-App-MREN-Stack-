@@ -20,12 +20,15 @@ function Navbar() {
     <div className=" flex gap-8 items-center justify-center m-4 p-4 bg-green-400">
       <Link to={"/"}>Home</Link>
       {cookie["access-token"] ? (
-        <Link to={"/create-recipe"}>Create Recipe</Link>
+        <>
+          <Link to={"/saved-recipes"}>Saved Recipes</Link>
+
+          <Link to={"/create-recipe"}>Create Recipe</Link>
+        </>
       ) : (
         <Link to={"/auth"}>Create Recipe</Link>
       )}
 
-      <Link to={"/saved-recipes"}>Saved Recipes</Link>
       {!cookie["access-token"] ? (
         <Link to={"/auth"}>Login/Regsiter</Link>
       ) : (

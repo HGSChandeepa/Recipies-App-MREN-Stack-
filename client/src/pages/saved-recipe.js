@@ -52,7 +52,7 @@ function SavedRecipes() {
                     })}
                   </ul>
                 </div>
-                <img className="w-90" src={recipe.imageUrl} alt={recipe.name} />
+                <img className="w-60" src={recipe.imageUrl} alt={recipe.name} />
                 <p className="p-2">{recipe.cookingTime} (minutes)</p>
               </li>
             );

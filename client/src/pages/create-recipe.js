@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useGetUserId } from "../hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function CreteRecipes() {
   //user id (by the custom hook)
   const userId = useGetUserId();
+  const [cookies, setCookie] = useCookies(["access-token"]);
 
   //navigation
   const navigate = useNavigate();
@@ -45,7 +47,9 @@ function CreteRecipes() {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/recipes", recipe);
+      await axios.post("http://localhost:3001/recipes", recipe, {
+        headers: { Authorization: cookies["access-token"] },
+      });
       alert("Recipe added");
       navigate("/");
     } catch (err) {
