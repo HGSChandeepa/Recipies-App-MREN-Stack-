@@ -47,26 +47,10 @@ router.put("/", async (req, res) => {
   }
 });
 
-//get the user only saved recepies
-router.get("/saved-recipes", async (req, res) => {
-  try {
-    //take the user
-    const user = await UserModel.findById(req.body.userId);
-    //take all the recipies where the _id in recipes in user>savedRecipies
-    const savedRecipes = await RecipeModel.find({
-      _id: { $in: user.savedRecipes },
-    });
-    //list of recipe objects
-    return res.json(savedRecipes);
-  } catch (err) {
-    res.json(err);
-  }
-});
-
 //get a single user saved reccipee
-router.get("saved-recipes/ids", async (req, res) => {
+router.get("/saved-recipes/ids/:userId", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.params.userId);
 
     return res.json({ savedRecipes: user?.savedRecipes }); //user can be null
   } catch (err) {
@@ -74,5 +58,20 @@ router.get("saved-recipes/ids", async (req, res) => {
   }
 });
 
+//get the user only saved recepies
+router.get("/saved-recipes/:userId", async (req, res) => {
+  try {
+    //take the user
+    const user = await UserModel.findById(req.params.userId);
+    //take all the recipies where the _id in recipes in user>savedRecipies
+    const savedRecipes = await RecipeModel.find({
+      _id: { $in: user.savedRecipes },
+    });
+    //list of recipe objects
+    return res.json({ savedRecipes: savedRecipes });
+  } catch (err) {
+    res.json(err);
+  }
+});
 //export
 export { router as RecipeRouter };
